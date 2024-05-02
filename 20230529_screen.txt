@@ -1,0 +1,49 @@
+_________________start with Elja___________________
+
+#login to elja via putty
+
+#create a screen, which can active even if you close the connection, Otherwise the interactive program is shut down when you close the connection.#
+#when you come back to your laptop, connect with putty just type screen -ls and it will list the active screen since yesterday, then screen -r and the idnumber of the screen (from -ls) to connect#
+
+%screen
+
+#Go the directory you are working, then submitt job via bash script or start interactive node Eg: srun RNAseq "RNAseqJuan" --cpus-per-task 24 --mem-per-cpu 1500 --time 24:00:00 --pty bash
+
+%srun --job-name "RNAseqJuan" --cpus-per-task 24 --mem-per-cpu 1500 --time 24:00:00 --pty bash
+#Or type#
+%srun --job-name "Juan" --cpus-per-task 24 --mem-per-cpu 1500 --time 24:00:00 --pty bash
+
+#start to analysis, check the available module for your specific questions#
+%ml avail python
+#it will show all the available python software on the screen, then choose one you need, or copy the one shows on the screen#
+%ml Python
+
+#when you finish all your runs, then type exit#
+%exit
+
+
+#check how many sessions I have by
+%screen -ls
+
+#delete screen
+%screen -XS <session-id> quit
+
+#ie:screen -XS 29533.pts-6.elja-irhpc quit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

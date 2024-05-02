@@ -1,0 +1,147 @@
+---
+title: "fisher exact test"
+output: html_document
+date: "2024-04-07"
+---
+#Enter your data into R as a contingency table. In your case, the data can be represented as follows
+```{r}
+data <- matrix(c(22078, 3638, 216, 68), nrow = 2, byrow = TRUE)
+rownames(data) <- c("Group 1", "Group 2")
+colnames(data) <- c("Category 1", "Category 2")
+```
+Use the fisher.test() function to perform the test:
+```{r}
+result <- fisher.test(data)
+```
+#Interpret the results:
+```{r}
+print(result)
+
+```
+```{r}
+data1 <- matrix(c(22078, 3638, 267, 17), nrow = 2, byrow = TRUE)
+rownames(data1) <- c("Group 1", "Group 2")
+colnames(data1) <- c("Category 1", "Category 2")
+```
+Use the fisher.test() function to perform the test:
+```{r}
+result1 <- fisher.test(data1)
+```
+#Interpret the results:
+```{r}
+print(result1)
+
+```
+```{r}
+data2 <- matrix(c(22078, 3638, 73, 17), nrow = 2, byrow = TRUE)
+rownames(data2) <- c("Group 1", "Group 2")
+colnames(data2) <- c("Category 1", "Category 2")
+result2 <- fisher.test(data2)
+print(result2)
+```
+```{r}
+data3 <- matrix(c(22078, 3638, 83, 22), nrow = 2, byrow = TRUE)
+rownames(data3) <- c("Group 1", "Group 2")
+colnames(data3) <- c("Category 1", "Category 2")
+result3 <- fisher.test(data3)
+print(result3)
+```
+```{r}
+data4 <- matrix(c(22078, 3638, 110, 26), nrow = 2, byrow = TRUE)
+rownames(data4) <- c("Group 1", "Group 2")
+colnames(data4) <- c("Category 1", "Category 2")
+result4 <- fisher.test(data4)
+print(result4)
+
+```
+```{r}
+data5 <- matrix(c(3573, 65, 56, 17), nrow = 2, byrow = TRUE)
+rownames(data5) <- c("Group 1", "Group 2")
+colnames(data5) <- c("Category 1", "Category 2")
+result5 <- fisher.test(data5)
+print(result5)
+
+```
+```{r}
+data6 <- matrix(c(3573, 65, 61, 22), nrow = 2, byrow = TRUE)
+rownames(data6) <- c("Group 1", "Group 2")
+colnames(data6) <- c("Category 1", "Category 2")
+result6 <- fisher.test(data6)
+print(result6)
+```
+```{r}
+data7 <- matrix(c(3573, 65, 84, 26), nrow = 2, byrow = TRUE)
+rownames(data7) <- c("Group 1", "Group 2")
+colnames(data7) <- c("Category 1", "Category 2")
+result7 <- fisher.test(data7)
+print(result7)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Get the list of all available colors
+all_colors <- colors()
+
+# Plot points with different colors
+par(mfrow = c(1, 1))  # Arrange plots in an 1x1 grid
+for (i in 1:length(all_colors)) {
+  plot(1, 1, pch = 19, col = all_colors[i], cex = 3, xlim = c(0, 2), ylim = c(0, 2), xlab = "", ylab = "")
+  text(1, 0.5, all_colors[i], pos = 2)  # Add text label
+}
+
+
+```
+
+```{r}
+# Change column names
+colnames(All.EM.genes.in.mouse) <- c("EMgenes")
+
+# Display the updated column names
+print(colnames(All.EM.genes.in.mouse))
+```
+
+
+```{r}
+# Change column names
+colnames(EM_boundary_genes_in_mouse) <- c("EMgenes")
+
+# Display the updated column names
+print(colnames(EM_boundary_genes_in_mouse))
+
+```
+```{r}
+# Get genes in All. but not in EM_b
+extra_genes <- setdiff(All.EM.genes.in.mouse, EM_boundary_genes_in_mouse)
+
+# Print or use the extra gene list
+print(extra_genes)
+
+```
+
+```{r}
+write.csv(extra_genes, file = "extra_genes.csv", row.names = FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

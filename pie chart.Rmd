@@ -1,0 +1,97 @@
+---
+title: "pie chart"
+output: html_document
+date: "2024-04-07"
+---
+# according to online material https://www.statmethods.net/graphs/pie.html
+#load data and define colors
+```{r}
+labels <- c("Highly coexpressed", "Coexpressed", "Non coexpressed")
+sizes <- c(28, 31, 41)
+
+colors <-c("moccasin", "skyblue", "gray")
+pie(sizes, labels = labels, col = colors, main = "The distribution of EM genes for mouse")
+```
+```{r}
+# Create pie chart
+pie(sizes,  main = "Pie Chart with Values")
+
+# Calculate label positions
+label_pos <- 2 * cumsum(sizes) - sizes
+
+# Add labels with values
+percent <- round(sizes/sum(sizes) * 100)
+labels_with_values <- paste(labels, ": ", percent, "%", sep = "")
+pie(sizes, labels = labels_with_values, col = colors, main = "The distribution of EM genes for mouse" )
+```
+```{r}
+labels <- c("Highly coexpressed", "Coexpressed", "Non coexpressed")
+sizes <- c(26, 34, 40)
+
+colors <-c("moccasin", "skyblue", "gray")
+pie(sizes, labels = labels, col = colors, main = "The distribution of DEGS in EM genes list")
+# Create pie chart
+pie(sizes,  main = "The distribution of DEGS in EM genes list")
+
+# Calculate label positions
+label_pos <- 2 * cumsum(sizes) - sizes
+```
+
+
+```{r}
+# Add labels with values
+percent <- round(sizes/sum(sizes) * 100)
+labels_with_values <- paste(labels, ": ", percent, "%", sep = "")
+pie(sizes, labels = labels_with_values, col = colors, main = "DEGs in neuronal develoment model" )
+```
+
+```{r}
+myCol <- brewer.pal(3, "Pastel2")
+pie(sizes, labels = labels_with_values, col = myCol, main = "Pie Chart of EM genes" )
+
+```
+
+#check all available colors in R
+
+```{r}
+# Get the list of all available colors
+all_colors <- colors()
+
+# Plot points with different colors
+par(mfrow = c(1, 1))  # Arrange plots in an 1x1 grid
+for (i in 1:length(all_colors)) {
+  plot(1, 1, pch = 19, col = all_colors[i], cex = 3, xlim = c(0, 2), ylim = c(0, 2), xlab = "", ylab = "")
+  text(1, 0.5, all_colors[i], pos = 2)  # Add text label
+}
+```
+
+
+```{r}
+# Create pie chart
+pie(sizes, labels = labels, col = rainbow(length(labels)), main = "My Pie Chart", cex.main = 1.5)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

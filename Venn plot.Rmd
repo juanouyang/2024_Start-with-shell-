@@ -1,0 +1,216 @@
+---
+title: "Venn plot"
+output: html_document
+date: "2024-04-07"
+---
+oneline tool https://r-graph-gallery.com/14-venn-diagramm
+```{r}
+# Load libraries
+install.packages("VennDiagram")
+library(VennDiagram)
+install.packages("RColorBrewer")
+library(RColorBrewer)
+```
+```{r}
+install.packages("BioVenn")
+library(RColorBrewer)
+```
+```{r}
+library(RColorBrewer)
+myCol <- brewer.pal(4, "Pastel2")
+```
+
+```{r}
+venn.plot <- venn.diagram(
+  x = list(
+    Coexpressed$Genes,
+    DEGs$Genes,
+    highly$Genes,
+    noco$Genes
+  ),
+  category.names = c("Coexpressed", "DEGs", "Highly coexpressed", "Non coexpressed"),
+  filename = '#0408_venn_diagramm.png',fill = myCol, # Colors for each set
+  main = "Overlap between Gene Lists"
+)
+
+```
+
+
+```{r}
+# Load libraries
+install.packages("VennDiagram")
+install.packages("RColorBrewer")
+library(VennDiagram)
+library(RColorBrewer)
+```
+```{r}
+library(RColorBrewer)
+myCol <- brewer.pal(4, "Pastel2")
+```
+
+```{r}
+
+# Counts of genes in each list
+count_list1 <- 66
+count_list2 <- 73
+count_list3 <- 83
+count_list4 <- 110
+
+# Counts of overlap between list 1 and others
+overlap_list1_list2 <- 17
+overlap_list1_list3 <- 22
+overlap_list1_list4 <- 26
+
+# Create Venn diagram
+venn.plot <- venn.diagram(
+  x = list(
+    List1 = 1:count_list1,
+    List2 = 1:count_list2,
+    List3 = 1:count_list3,
+    List4 = 1:count_list4
+  ),
+  category.names = c("DGEs", "Highly coexpressed", "Coexpressed", "Non coexpressed"),
+  filename = '#01_venn_diagramm.png',
+  fill = myCol, # Colors for each set
+  alpha = 0.5, # Transparency of sets
+  cat.cex = 1, # Category label size
+  cat.fontface = "bold", # Category label font
+  cat.pos = 0, # Category label position (0 for inside, 1 for outside)
+  margin = 0.05, # Margin around the plot
+  main = "Overlap between Gene Lists"
+)
+```
+```{r}
+# Load the library
+library(VennDiagram)
+
+# Counts of elements in each set
+count_set1 <- 66
+count_set2 <- 73
+count_set3 <- 83
+overlap_set1_set2_in_set3 <- 26
+
+# Create logical vectors representing the presence of elements in each set
+set1 <- rep(FALSE, count_set3)
+set2 <- rep(FALSE, count_set3)
+set3 <- rep(FALSE, count_set3)
+
+set1[1:count_set1] <- TRUE
+set2[1:count_set2] <- TRUE
+set3[1:count_set3] <- TRUE
+
+# Identify the overlap between set 1 and set 2 within set 3
+overlap_set1_set2_in_set3_logical <- rep(FALSE, count_set3)
+overlap_set1_set2_in_set3_logical[1:overlap_set1_set2_in_set3] <- TRUE
+```
+
+
+```{r}
+# Create Venn diagram
+venn.plot <- venn.diagram(
+  x = list(Set1 = set1, Set2 = set2, Set3 = set3),
+  category.names = c("Set 1", "Set 2", "Overlap(Set 1, Set 2) in Set 3"),
+  filename = '02.png',
+  fill = c("red", "green", "blue"), # Colors for each set
+  alpha = 0.5, # Transparency of sets
+  cat.cex = 1, # Category label size
+  cat.fontface = "bold", # Category label font
+  cat.pos = 0, # Category label position (0 for inside, 1 for outside)
+  margin = 0.05, # Margin around the plot
+  main = "Mutual Relationships between Set 1 and Set 2 in Set 3"
+)
+```
+
+
+```{r}
+# Plot the Venn diagram
+grid.draw(venn.plot)
+
+
+```
+
+```{r}
+# Counts of genes in each list
+count_list1 <- 66
+count_list2 <- 73
+
+
+# Counts of overlap between list 1 and others
+overlap_list2_in_list1 <- 17
+
+# Create logical vectors representing the presence of elements in each set
+set1 <- rep(FALSE, count_1)
+set2 <- rep(FALSE, count_1)
+set1[1:count_set1] <- TRUE
+set2[1:count_set2] <- TRUE
+
+# Identify the overlap between set 1 and set 2 within set 3
+overlap_set1_set2_in_set3_logical <- rep(FALSE, count_set3)
+overlap_set1_set2_in_set3_logical[1:overlap_set1_set2_in_set3] <- TRUE
+
+# Create Venn diagram
+venn.plot <- venn.diagram(
+  x = list(
+    List1 = 1:count_list1,
+    List2 = 1:count_list2),
+  category.names = c("DGEs", "Highly coexpressed"),
+  filename = '#01_venn_diagramm.png',
+  fill = c("red", "green"), # Colors for each set
+  alpha = 0.5, # Transparency of sets
+  cat.cex = 1, # Category label size
+  cat.fontface = "bold", # Category label font
+  cat.pos = 0, # Category label position (0 for inside, 1 for outside)
+  margin = 0.05, # Margin around the plot
+  main = "Overlap between Gene Lists"
+)
+```
+
+
+# Chart, input as .png formate
+venn.diagram(
+  x = list(set1, set2, set3),
+  category.names = c("Set 1" , "Set 2 " , "Set 3"),
+  filename = '#14_venn_diagramm.png',
+  output=TRUE
+)
+```
+
+
+```{r}
+# Create Venn diagram
+venn.plot <- venn.diagram(
+  x = list(set1, set2, set3),
+  category.names = c("Set 1", "Set 2", "Set 3"),
+  filename = NULL
+)
+```
+
+```{r}
+# Plot the Venn diagram
+grid.draw(venn.plot)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

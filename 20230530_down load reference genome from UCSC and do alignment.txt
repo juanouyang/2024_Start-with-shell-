@@ -1,0 +1,54 @@
+
+# I want to visualize where is my alignment regions in the mouse genome? Do I need to convert .bam file to .txt or .bed file?#
+
+What I have done is that 
+
+#Go into my directory#
+[juo5@elja-irhpc Mimir]$ cd /hpcdata/Mimir/juo5
+
+# transfer reference genome and one fastq file from fastq_pass of one sample  to my directory '20230527_raw data'#
+# download from here https://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/ , called mm10.fa.gz#
+%wget --timestamping 'ftp://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/mm10.fa.gz' 
+#or get gtf file
+%wget –timestamping 'ftp://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/genes/mm10.refGene.gtf.gz'
+
+[juo5@elja-irhpc 20230527_raw data]$ ls
+mm10.fa.gz PAG79945_pass_ec4ad5ab_a8fae465_0.fastq.gz
+
+#conver .gz to .fa#
+[juo5@elja-irhpc 20230527_raw data]$ gunzip mm10.fa.gz
+[juo5@elja-irhpc 20230527_raw data]$ gunzip PAG79945_pass_ec4ad5ab_a8fae465_0.fastq.gz
+[juo5@elja-irhpc 20230527_raw data]$ ls
+mm10.fa PAG79945_pass_ec4ad5ab_a8fae465_0.fastq
+
+#index reference genome with minimap2, file goes into reference.mmi#
+[juo5@elja-irhpc 20230527_raw data]$ minimap2 -d reference.mmi mm10.fa
+[M::mm_idx_gen::42.304*1.83] collected minimizers
+[M::mm_idx_gen::55.119*2.08] sorted minimizers
+[M::main::55.119*2.08] loaded/built the index for 66 target sequence(s)
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 66
+[M::mm_idx_stat::56.445*2.05] distinct minimizers: 97776310 (39.85% are singletons); average occurrences: 5.139; average spacing: 5.435; total length: 2730871774
+[M::main] Version: 2.24-r1122
+[M::main] CMD: minimap2 -d reference.mmi mm10.fa
+[M::main] Real time: 56.569 sec; CPU: 115.917 sec; Peak RSS: 10.670 GB
+
+# alignment one fastq file with reference genome, alignment file goes into alignment.sam #
+[juo5@elja-irhpc 20230527_raw data]$ minimap2 -ax sr reference.mmi PAG79945_pass_ec4ad5ab_a8fae465_0.fastq > alignments.sam
+[M::mm_idx_gen::0.001*2.89] collected minimizers
+[M::mm_idx_gen::0.003*2.86] sorted minimizers
+[M::main::0.003*2.83] loaded/built the index for 0 target sequence(s)
+[M::mm_mapopt_update::0.003*2.82] mid_occ = 1000
+[M::mm_idx_stat] kmer size: 21; skip: 11; is_hpc: 0; #seq: 0
+[M::mm_idx_stat::0.003*2.77] distinct minimizers: 0 (-nan% are singletons); average occurrences: -nan; average spacing: -nan; total length: 0
+[M::worker_pipeline::0.164*1.55] mapped 4000 sequences
+[M::main] Version: 2.24-r1122
+[M::main] CMD: minimap2 -ax sr reference.mmi PAG79945_pass_ec4ad5ab_a8fae465_0.fastq
+[M::main] Real time: 0.165 sec; CPU: 0.255 sec; Peak RSS: 0.020 GB
+
+#Convert .sam file to .bam file and sort#
+
+[juo5@elja-irhpc 20230527_raw data]$ samtools view -bS alignments.sam > alignments.bam
+[juo5@elja-irhpc 20230527_raw data]$ samtools sort -o sorted_alignments.bam alignments.bam
+bash: SAMtools: command not found
+
+#Because I can open alignment.bam, I think it works to convert .sam file to .bam file. Then I want to convert bam file to bed file#
